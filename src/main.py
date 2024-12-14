@@ -1,12 +1,11 @@
 from dataclasses import dataclass
 from subprocess import Popen, PIPE
-from typing import Any
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse, Response
+from fastapi.responses import HTMLResponse, Response, JSONResponse
 from pydantic import BaseModel
 
-from src.devices import Device, get_usb_buses
-from src.momo import momo
+from devices import Device, get_usb_buses
+from momo import momo
 
 server = FastAPI()
 
@@ -87,31 +86,31 @@ class LaunchResponse(BaseModel):
 @server.post("/launch", response_model=LaunchResponse)
 async def launch(request: LaunchRequest):
     if processes.get(request.bus) is not None:
-        return Response(
+        return JSONResponse(
             content=LaunchResponse(
                 success=False,
                 message="already running",
-            ),
+            ).model_dump(),
             status_code=400,
         )
 
     devices = get_usb_buses()
 
     if not (request.bus in [device.bus for device in devices]):
-        return Response(
+        return JSONResponse(
             content=LaunchResponse(
                 success=False,
                 message="no such device",
-            ),
+            ).model_dump(),
             status_code=400,
         )
 
     if len(available_ports) == 0:
-        return Response(
+        return JSONResponse(
             content=LaunchResponse(
                 success=False,
                 message="port limit",
-            ),
+            ).model_dump(),
             status_code=400,
         )
 
@@ -119,11 +118,11 @@ async def launch(request: LaunchRequest):
     process = momo(bus=request.bus, port=port)
     processes[request.bus] = MomoProcess(port=port, process=process)
 
-    return Response(
+    return JSONResponse(
         content=LaunchResponse(
             success=True,
             message="ok",
-        ),
+        ).model_dump(),
         status_code=200,
     )
 
@@ -137,6 +136,7 @@ async def stop(request: StopRequest):
     process = processes.get(request.bus)
     if process is not None:
         process.process.terminate()
+        process.process.kill()
         available_ports.append(process.port)
         del processes[request.bus]
     return Response(

@@ -1,0 +1,74 @@
+html body {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Roboto", sans-serif;
+  background-color: #f0f0f0;
+}
+
+header {
+  background-color: #df8abb;
+  color: white;
+  padding: 10px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+main {
+  max-width: 1024px;
+}
+
+#devices {
+  list-style: none;
+}
+
+#devices li {
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#devices li div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#devices li div span.status {
+  padding-left: 50px;
+}
+
+#devices li div span.status span {
+  color: #df8abb;
+}
+
+#devices li div span.port {
+  padding-left: 50px;
+}
+
+#devices li div span.port :first-child {
+  color: #00a86b;
+}
+
+button.start {
+  background-color: #df8abb;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.stop {
+  background-color: #f0f0f0;
+  color: #df8abb;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
