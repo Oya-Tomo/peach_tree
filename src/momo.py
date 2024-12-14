@@ -9,7 +9,7 @@ def momo(
     port: int,
 ):
     process = Popen(
-        f'./momo --no-audio-device --video-device "{bus}" test --port {port}',
+        f'exec ./momo --no-audio-device --video-device "{bus}" test --port {port}',
         cwd=f"{home}/Downloads/momo",
         user="oyatomo",
         shell=True,
