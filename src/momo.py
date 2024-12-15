@@ -1,7 +1,9 @@
 from subprocess import Popen, PIPE
+import os
 from os.path import expanduser
 
-home = expanduser("~")
+
+MOMO_PATH = os.environ["MOMO_PATH"]
 
 
 def momo(
@@ -10,8 +12,7 @@ def momo(
 ):
     process = Popen(
         f'exec ./momo --no-audio-device --video-device "{bus}" test --port {port}',
-        cwd=f"{home}/Downloads/momo",
-        user="oyatomo",
+        cwd=f"{MOMO_PATH}",
         shell=True,
         stdout=PIPE,
         stderr=PIPE,
