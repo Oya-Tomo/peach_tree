@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Configuration schema for the Peach Tree",
+  "properties": {
+    "ports": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 1024,
+        "maximum": 9999
+      }
+    }
+  }
+}
