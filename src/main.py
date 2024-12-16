@@ -1,3 +1,4 @@
+import json
 from dataclasses import dataclass
 from subprocess import Popen, PIPE
 from fastapi import FastAPI
@@ -9,7 +10,9 @@ from momo import momo
 
 server = FastAPI()
 
-available_ports = [8160, 8162, 8164, 8166, 8168]
+config = json.load(open("config/config.json"))
+
+available_ports = config["ports"]
 
 
 @dataclass
